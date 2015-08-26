@@ -5,7 +5,10 @@ var waldoCalls = {
     var relativeX = (e.pageX - offset.left);
     var relativeY = (e.pageY - offset.top);
 
-    alert("X: " + relativeX + " Y: " + relativeY);
+    var c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+    ctx.rect(relativeX, relativeY,150,100);
+    ctx.stroke();
   }
 };
 
