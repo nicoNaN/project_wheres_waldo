@@ -1,6 +1,8 @@
 var waldoCalls = {
 
-  drawMouseBox: function(elmnt, e) {
+  count: 1,
+
+  drawMouseBox: function(elmnt, e, count) {
     var offset = $(elmnt).offset();
     var relativeX = (e.pageX - offset.left);
     var relativeY = (e.pageY - offset.top);
@@ -9,6 +11,11 @@ var waldoCalls = {
     var ctx = c.getContext("2d");
     ctx.rect(relativeX - 25, relativeY - 25,50,50);
     ctx.stroke();
+
+    $("#waldo").append("<p " + "id=tag" + this.count + ">TESTING</p>");
+    $("#tag" + this.count).css("top", relativeY);
+    $("#tag" + this.count).css("left", relativeX);
+    this.count++;
   },
 
   drawWaldo: function() {
