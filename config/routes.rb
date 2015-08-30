@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  root 'waldo#index'
+  root 'guesses#index'
+
+  resources :guesses
 end
