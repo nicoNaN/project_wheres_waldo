@@ -51,26 +51,40 @@ var waldoCalls = {
     console.log(this.count);
     submitEvent.preventDefault();
 
-    var $form = $("#tag" + this.count-1),
+    console.log($('[id^=tag]'));
+    var $form = $('[id^=tag]'),
         name = $form.find("option:selected").attr("value");
 
     var posting = $.post("http://localhost:3000/guesses.json",
                   { name: name, x: this.relativeX, y: this.relativeY});
 
-    // posting.done(function(data) {
-    //   this.count++;
-    // });
+    posting.done(function(data) {
+      $form.remove();
+    });
   }
 };
 
+pageLocked = false;
+$test = $("");
+
+$(document).on("DOMNodeInserted", function(e) {
+  if ($(e.target).is('[id^=tag]')) {
+    pageLocked = true;
+
+    $('[id^=tag]').submit(function(submit){
+      waldoCalls.postGuess(submit);
+      pageLocked = false;
+    });
+  }
+})
+
 $(document).ready(function() {
   $('#waldo').click(function(e) {
-    waldoCalls.drawMouseBox(this, e);
-    waldoCalls.$selectedForm.submit(function(submit){
-      waldoCalls.postGuess(submit);
-    });
+     if (!pageLocked) {
+       waldoCalls.drawMouseBox(this, e);
+       $test = waldoCalls.$selectedForm;
+     }
   });
-
 });
 
 $(document).on('page:change', function() {
