@@ -18,15 +18,27 @@ var waldoCalls = {
     });
   },
 
-  createCountdown: function() {
+  createCountdown: function(callback) {
     var score = 100;
+    var $container = $("#countdown");
+    $container.text("Your score: " + score);
+
     var countdown = setInterval(function() {
       if (--score) {
-        $("#countdown").text("Your score: " + score);
+        $container.text("Your score: " + score);
       } else {
         clearInterval(countdown);
+        callback.call($container);
       }
     }, 2000);
+  },
+
+  gameOver: function() {
+    this.text("Game over!");
+
+    setInterval(function() {
+      window.location = "/";
+    }, 5000);
   }
 
 };
@@ -34,7 +46,7 @@ var waldoCalls = {
 $(document).ready(function() {
   var gameID = parseInt(window.location.pathname.split('/').pop(), 10);
 
-  waldoCalls.createCountdown();
+  waldoCalls.createCountdown(waldoCalls.gameOver);
 
   $('#waldo').click(function(e) {
      waldoCalls.drawTagBox(this, e, gameID);
