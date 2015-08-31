@@ -1,2 +1,6 @@
 $('.guess-box').remove();
+$('.guess').remove();
+
+$("#countdown").remove();
+
 $("#waldo").append("<%= escape_javascript(render :partial => 'gameover', :locals => { :game => @game } ) %>")
