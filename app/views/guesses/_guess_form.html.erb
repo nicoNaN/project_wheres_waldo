@@ -1,6 +1,6 @@
 
 <div class="guess-box">
-  <%=form_for guess, remote: true do |f| %>
+  <%=form_for [game, guess], remote: true do |f| %>
     <%= f.collection_select :character_id, game.remaining_chars, :id, :name, {prompt: "Who's here?"} %>
     <%= f.hidden_field :xpos, value: xpos %>
     <%= f.hidden_field :ypos, value: ypos %>

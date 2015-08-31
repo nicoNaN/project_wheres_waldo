@@ -1,5 +1,7 @@
 class GuessesController < ApplicationController
 
+  skip_before_action :verify_authenticity_token
+
   def index
     @game = Game.find(params[:game_id])
     @guesses = @game.guesses.all
@@ -28,21 +30,30 @@ class GuessesController < ApplicationController
   end
 
   def create
-    @guess = Guess.new( name: params["name"],
-                        x: params["x"],
-                        y: params["y"]
-    )
+    @game = Game.find(params[:game_id])
+    @guess = @game.guesses.build(whitelisted_guess_params)
+
+    puts "CHAR ID" + @guess.xpos.to_s
 
     respond_to do |format|
       if @guess.save
-        if @guess.count == 6
-          format.js { redirect_to edit_game_url }
+        if @game.guesses.length == Character.count
+          format.js { redirect_to edit_game_url(@game) }
         else
-          format.html { redirect_to @game, notice: 'Tag created!' }
-          format.js { render :show, status: :created, location: @game }
+          format.html { redirect_to [@game, @tag], notice: 'Tag created!' }
+          format.js { render :show, status: :created, location: [@game, @guess] }
         end
+      else
+        format.html { render :new }
+        format.js { render json: @guess.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  private
+
+  def whitelisted_guess_params
+    params.require(:guess).permit(:character_id, :xpos, :ypos)
   end
 
 end
