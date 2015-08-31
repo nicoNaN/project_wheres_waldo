@@ -25,8 +25,6 @@ class GuessesController < ApplicationController
     @game = Game.find(params[:game_id])
     @guess = @game.guesses.build(whitelisted_guess_params)
 
-    puts "CHAR ID" + @guess.xpos.to_s
-
     respond_to do |format|
       if @guess.save
         if @game.guesses.length == Character.count
