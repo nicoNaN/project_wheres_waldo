@@ -1,0 +1,13 @@
+$('.guess-box').remove();
+
+$("#waldo").append("<%= escape_javascript(render :partial => 'guess_form', :locals => { :game => @game, :guess => @guess, :xpos => @xpos, :ypos => @ypos } ) %>")
+
+var boxHeight = 100;
+var boxWidth = 200;
+
+$('.guess-box').css({
+  height: boxHeight + "px",
+  width: boxWidth + "px",
+  top: (<%= @ypos %> - boxHeight / 2 ) + "px",
+  left: (<%= @xpos %> - boxWidth / 2 ) + "px"
+});
