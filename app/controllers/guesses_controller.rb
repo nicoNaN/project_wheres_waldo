@@ -1,7 +1,5 @@
 class GuessesController < ApplicationController
 
-  skip_before_action :verify_authenticity_token
-
   def index
     @game = Game.find(params[:game_id])
     @guesses = @game.guesses.all

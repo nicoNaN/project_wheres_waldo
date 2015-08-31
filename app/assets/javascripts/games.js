@@ -16,12 +16,25 @@ var waldoCalls = {
       async: true,
       dataType: 'script'
     });
+  },
+
+  createCountdown: function() {
+    var score = 100;
+    var countdown = setInterval(function() {
+      if (--score) {
+        $("#countdown").text("Your score: " + score);
+      } else {
+        clearInterval(countdown);
+      }
+    }, 2000);
   }
 
 };
 
 $(document).ready(function() {
   var gameID = parseInt(window.location.pathname.split('/').pop(), 10);
+
+  waldoCalls.createCountdown();
 
   $('#waldo').click(function(e) {
      waldoCalls.drawTagBox(this, e, gameID);
