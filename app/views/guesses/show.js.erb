@@ -1,0 +1,13 @@
+$('#<%= @guess.character.name %>').remove();
+$('.guess-box').remove();
+
+$("#waldo").append("<%= escape_javascript(render :partial => 'guess', locals: { guess: @guess } ) %>");
+
+var tagHeight = 100;
+var tagWidth = 100;
+$('#<%= @guess.character.name %>').css({
+  height: tagHeight + "px",
+  width: tagWidth + "px",
+  top: (<%= @guess.ypos %> - tagHeight / 2 ) + "px",
+  left: (<%= @guess.xpos %> - tagWidth / 2 ) + "px"
+});

@@ -26,4 +26,15 @@ $(document).ready(function() {
   $('#waldo').click(function(e) {
      waldoCalls.drawTagBox(this, e, gameID);
    });
+
+   $('#gluttons').hover(function() {
+     $('.guess').show();
+   },
+
+     function() {
+       $('.guess').hide();
+     }
+   );
+
+
 });

@@ -1,0 +1,4 @@
+<div class = "guess" id = "<%= guess.character.name %>" >
+  <p><%= guess.character.name %></p>
+  <%= button_to "X", { controller: "guesses", action: "destroy", id: guess.id }, method: :delete, remote: true %>
+</div>

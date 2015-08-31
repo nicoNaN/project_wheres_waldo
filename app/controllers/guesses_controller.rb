@@ -12,12 +12,6 @@ class GuessesController < ApplicationController
     end
   end
 
-  def show
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def new
     @game = Game.find(params[:game_id])
     @guess = @game.guesses.build
@@ -47,6 +41,17 @@ class GuessesController < ApplicationController
         format.html { render :new }
         format.js { render json: @guess.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @guess = Guess.find(params[:id])
+    @name = @guess.character.name
+    @guess.destroy
+
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 
